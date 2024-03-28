@@ -10,6 +10,12 @@
 import CinemasController from '#controllers/cinemas_controller'
 import router from '@adonisjs/core/services/router'
 
+router.get('/', async () => {
+    return {
+      hello: 'world',
+    }
+  })
+
 router.post("/movie/:movieUid/reservations", "")                        // Permet de rentrer dans le tunnel de réseration
 router.post("/reservations/:uid/confirm", "")                           // Permet de confirmer la réservation si le status le permet
 router.get("/movie/:movieUid/reservations", "")                         // Liste toutes les réservations en cours pour un film
@@ -27,7 +33,7 @@ router.post("/cinema/:cinemaUid/rooms", "")                             // Perme
 router.put("/cinema/:cinemaUid/rooms/:uid", "")                         // Permet de modifier une salle de cinéma
 router.delete("/cinema/:cinemaUid/rooms/:uid", "")                      // Permet de supprimer une salle de cinéma
 
-router.get("/cinema/:cinemaUid/rooms/:roomUid/sceances", "")            // Permet de lister les scéances d'une salle
-router.post("/cinema/:cinemaUid/rooms/:roomUid/sceances", "")           // Permet de créer une scéance dans une salle
-router.put("/cinema/:cinemaUid/rooms/:roomUid/sceances/:uid", "")       // Permet de modifier scéance dans une salle
-router.delete("/cinema/:cinemaUid/rooms/:roomUid/sceances/:uid", "")    // Permet de supprimer une scéance dans une salle
+router.get("/cinema/:cinemaUid/rooms/:roomUid/sceances", "")            // Permet de lister les séances d'une salle
+router.post("/cinema/:cinemaUid/rooms/:roomUid/sceances", "")           // Permet de créer une séance dans une salle
+router.put("/cinema/:cinemaUid/rooms/:roomUid/sceances/:uid", "")       // Permet de modifier séance dans une salle
+router.delete("/cinema/:cinemaUid/rooms/:roomUid/sceances/:uid", "")    // Permet de supprimer une séance dans une salle

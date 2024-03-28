@@ -1,9 +1,18 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import User from './user.js'
+import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import Sceance from './sceance.js'
 
 export default class Reservation extends BaseModel {
   @column({ isPrimary: true })
   declare uid: string
+
+  @belongsTo(() => User)
+  declare userId: BelongsTo<typeof User>
+
+  @belongsTo(() => Sceance)
+  declare sceanceId: BelongsTo<typeof Sceance>
 
   @column()
   declare rank: number

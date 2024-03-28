@@ -6,8 +6,8 @@ export default class extends BaseSchema {
   async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.uuid('uid').primary()
-      table.integer("userId").notNullable()
-      table.string("sceanceId").notNullable()
+      table.integer("user_id").notNullable()
+      table.string("sceance_uid").notNullable()
       table.integer('rank')
       table.string('status')
       table.integer('seats')
@@ -16,8 +16,8 @@ export default class extends BaseSchema {
     })
 
     this.schema.alterTable(this.tableName, (table) => {
-      table.foreign('userId').references('users.id')
-      table.foreign('sceanceId').references('sceances.uid')
+      table.foreign('user_id').references('users.id')
+      table.foreign('sceance_uid').references('sceances.uid')
     })
   }
 

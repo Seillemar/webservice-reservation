@@ -1,13 +1,14 @@
 import Cinema from '#models/cinema';
+import Room from '#models/room';
+import Sceance from '#models/sceance';
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class CinemasController {
     public async create({ request, response }: HttpContext) {
         const cinema = new Cinema();
-        await cinema.fill({
-            uid: request.input('uid'),
-            title: request.input('title'),
-        }).save();
+        cinema.uid = request.input('uid');
+        cinema.title = request.input('title');
+        await cinema.save();
         return cinema;
     }
 
@@ -43,7 +44,6 @@ export default class CinemasController {
     {
         const cinema = await Cinema.findOrFail(params.uid);
         if (cinema) {
-            cinema.uid = request.input('uid');
             cinema.title = request.input('title');
 
             if (await cinema.save()) {
@@ -56,7 +56,13 @@ export default class CinemasController {
 
     public async destroy({request, response, params}: HttpContext)
     {
-        await Cinema.query().where('uid', params.uid).delete();
+        let test = {sessions: Array(), rooms: Array(), cine: new Cinema}
+        await (await Room.query().where('cinema_uid', params.uid)).forEach(async (room) => {
+            await Sceance.query().where('room_uid', room.uid).delete()
+        })
+        await Room.query().where('cinema_uid', params.uid).delete()
+        const cinema = await Cinema.findOrFail(params.uid);
+        cinema.delete()
         return response.json({message:"Deleted successfully"});
     }
 }

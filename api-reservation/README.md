@@ -7,9 +7,13 @@ Créer un dossier /tmp
 # Usage
 
 ```
-curl -i http://192.168.0.18:3333/cinema ; echo ""
+curl -i -X "POST" -H "Content-Type: application/json" --data "{\"uid\":\"1234\",\"title\":\"Pâté\"}" http://localhost:3333/cinema
 
-curl -i -X "POST" -H "Content-Type: application/json" --data '{"title":"titre","description":"description","release":"2023-01-01T00:00"}' http://192.168.0.18:3333/movies ; echo ""
+curl -i http://localhost:3333/cinema
 
-curl -i http://192.168.0.18:3333/movies/titre ; echo ""
+curl -i -X "POST" -H "Content-Type: application/json" --data "{\"uid\":\"1234\",\"name\":\"Salle 9 3\/4\",\"seats\":30}" http://localhost:3333/cinema/1234/rooms
+
+curl -i -X "GET" http://localhost:3333/cinema/1234/rooms
+
+curl -i -X "GET" http://localhost:3333/cinema/1234/rooms/1234
 ```

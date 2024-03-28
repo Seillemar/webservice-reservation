@@ -6,7 +6,7 @@ export default class extends BaseSchema {
   async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.uuid('uid').primary()
-      table.uuid('roomId')
+      table.uuid('room_uid')
       table.string('movie')
       table.timestamp('date')
       table.timestamp('created_at')
@@ -14,7 +14,7 @@ export default class extends BaseSchema {
     })
 
     this.schema.alterTable(this.tableName, (table) => {
-      table.foreign('roomId').references('rooms.uid')
+      table.foreign('room_uid').references('rooms.uid')
     })
   }
 

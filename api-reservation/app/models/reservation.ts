@@ -9,10 +9,10 @@ export default class Reservation extends BaseModel {
   declare uid: string
 
   @belongsTo(() => User)
-  declare userId: BelongsTo<typeof User>
+  declare userUid: BelongsTo<typeof User>
 
   @belongsTo(() => Sceance)
-  declare sceanceId: BelongsTo<typeof Sceance>
+  declare sceanceUid: BelongsTo<typeof Sceance>
 
   @column()
   declare rank: number

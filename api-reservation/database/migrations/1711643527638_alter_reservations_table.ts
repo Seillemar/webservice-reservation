@@ -5,13 +5,13 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.timestamp('expiresAt')
+      table.timestamp('expires_at')
     })
   }
 
   async down() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.dropColumn('expiresAt')
+      table.dropColumn('expires_at')
     })
   }
 }

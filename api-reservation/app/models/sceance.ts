@@ -7,8 +7,8 @@ export default class Sceance extends BaseModel {
   @column({ isPrimary: true })
   declare uid: string
 
-  @belongsTo(() => Room)
-  declare roomId: BelongsTo<typeof Room>
+  @column()
+  declare roomUid: string
 
   @column()
   declare movie: string
@@ -21,4 +21,7 @@ export default class Sceance extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
+
+  @belongsTo(() => Room)
+  declare room: BelongsTo<typeof Room>
 }

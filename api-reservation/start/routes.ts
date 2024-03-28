@@ -7,23 +7,23 @@
 |
 */
 
+import ReservationsController from '#controllers/reservations_controller'
 import router from '@adonisjs/core/services/router'
 import SessionController from '#controllers/session_controller'
 import CinemasController from '#controllers/cinemas_controller'
 import RoomsController from '#controllers/rooms_controller'
 
+router.post("/movie/:movieUid/reservations", [ReservationsController, "enter"])                        // Permet de rentrer dans le tunnel de réseration
+router.post("/reservations/:uid/confirm", [ReservationsController, "confirm"])                           // Permet de confirmer la réservation si le status le permet
+router.get("/movie/:movieUid/reservations", [ReservationsController, "readAll"])                         // Liste toutes les réservations en cours pour un film
+router.get("/reservations/:uid", [ReservationsController, "read"])                                    // Permet de récupérer le détail d'une réservation
 router.get('/', async () => {
     return {
         hello: 'world',
     }
 })
 
-router.post("/register", [SessionController, "store"])
-
-router.post("/movie/:movieUid/reservations", "")    // Permet de rentrer dans le tunnel de réseration
-router.post("/reservations/:uid/confirm", "")       // Permet de confirmer la réservation si le status le permet
-router.get("/movie/:movieUid/reservations", "")     // Liste toutes les réservations en cours pour un film
-router.get("/reservations/:uid", "")                // Permet de récupérer le détail d'une réservation
+router.post("/register", [SessionController, "store"])                // Permet de récupérer le détail d'une réservation
 
 router.get("/cinema", [CinemasController, "readAll"])           // Permet de lister les cinéma
 router.get("/cinema/:uid", [CinemasController, "read"])         // Permet d'afficher un cinéma

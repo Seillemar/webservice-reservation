@@ -9,10 +9,16 @@ export default class Reservation extends BaseModel {
   declare uid: string
 
   @belongsTo(() => User)
-  declare userUid: BelongsTo<typeof User>
+  declare user: BelongsTo<typeof User>
 
   @belongsTo(() => Sceance)
-  declare sceanceUid: BelongsTo<typeof Sceance>
+  declare sceance: BelongsTo<typeof Sceance>
+
+  @column()
+  declare userUid: string
+
+  @column()
+  declare sceanceUid: string
 
   @column()
   declare rank: number
@@ -28,4 +34,7 @@ export default class Reservation extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
+
+  @column.dateTime()
+  declare expiresAt: DateTime
 }

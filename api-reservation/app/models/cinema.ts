@@ -1,14 +1,9 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
-import type { HasMany } from '@adonisjs/lucid/types/relations'
-import Room from './room.js'
+import { BaseModel, column } from '@adonisjs/lucid/orm'
 
 export default class Cinema extends BaseModel {
   @column({ isPrimary: true })
-  declare uid: number
-
-  @hasMany(() => Room)
-  declare rooms: HasMany<typeof Room>
+  declare uid: string
 
   @column()
   declare title: string

@@ -3,7 +3,16 @@ import { BaseModel, column } from '@adonisjs/lucid/orm'
 
 export default class Reservation extends BaseModel {
   @column({ isPrimary: true })
-  declare uid: number
+  declare uid: string
+
+  @column()
+  declare rank: number
+
+  @column()
+  declare status: string
+
+  @column()
+  declare seats: number
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

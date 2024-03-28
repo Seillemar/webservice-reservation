@@ -1,12 +1,20 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
-
-// J'aimerais préciser que le mot "sceance" n'existe dans aucune langue
-// En anglais pour traduire "séance" on dit "session"
+import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import Room from './room.js'
 
 export default class Sceance extends BaseModel {
   @column({ isPrimary: true })
-  declare uid: number
+  declare uid: string
+
+  @belongsTo(() => Room)
+  declare roomId: BelongsTo<typeof Room>
+
+  @column()
+  declare movie: string
+
+  @column.dateTime()
+  declare date: DateTime
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

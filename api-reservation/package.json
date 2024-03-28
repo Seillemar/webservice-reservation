@@ -57,9 +57,12 @@
     "@adonisjs/mail": "^9.2.1",
     "@vinejs/vine": "^1.7.1",
     "adonis-rabbit": "^0.2.0",
+    "amqplib": "^0.10.3",
     "better-sqlite3": "^9.4.3",
     "luxon": "^3.4.4",
-    "reflect-metadata": "^0.2.1"
+    "reflect-metadata": "^0.2.1",
+    "uuid": "^9.0.1",
+    "uuidv4": "^6.2.13"
   },
   "eslintConfig": {
     "extends": "@adonisjs/eslint-config/app"

@@ -1,7 +1,7 @@
 import Reservation from '#models/reservation';
 import type { HttpContext } from '@adonisjs/core/http';
+import mail from '@adonisjs/mail/services/main';
 import { DateTime } from 'luxon';
-
 
 export default class ReservationsController {
     public async enter({ request, response }: HttpContext) {
@@ -62,6 +62,13 @@ export default class ReservationsController {
                 return; // Arrêtez l'exécution de la fonction
             }
 
+            // Récupérez les informations de l'utilisateur
+            const user = await userUid;
+            if (!user) {
+                response.status(404).json({ message: 'User not found' });
+                return;
+            }
+
             if(rank === 1){
                 const actualStatus = await Reservation.query()
                     .where('userUid', userUid)
@@ -74,6 +81,15 @@ export default class ReservationsController {
                             .where('userUid', userUid)
                             .where('sceanceUid', sceanceUid)
                             .update({ status: 'confirmed' });
+
+                        // Envoyez un e-mail à l'utilisateur
+                        await mail.send((message) => {
+                            message
+                              .to(user.email)
+                              .from('reserve_cine@local.com')
+                              .subject('Votre réservation a été confirmée')
+                              .text('Votre réservation a été confirmée avec succès');
+                          })                      
 
                         await Reservation.query()
                             .where('seanceUid', sceanceUid)

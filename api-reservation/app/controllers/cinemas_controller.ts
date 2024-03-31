@@ -2,6 +2,8 @@ import Cinema from '#models/cinema';
 import Room from '#models/room';
 import Sceance from '#models/sceance';
 import type { HttpContext } from '@adonisjs/core/http'
+import mail from '@adonisjs/mail/services/main';
+
 
 export default class CinemasController {
     public async create({ request, response }: HttpContext) {
@@ -14,6 +16,13 @@ export default class CinemasController {
 
     public async readAll({request, response, params}: HttpContext)
     {
+        await mail.send((message) => {
+            message
+              .to('braguettefield@gmail.com')
+              .from('info@example.org')
+              .subject('Verify your email address')
+              .text('Please confirm your email address by clicking on the link below')
+          })  
         try {
             const cinema = await Cinema.all();
             if(cinema){

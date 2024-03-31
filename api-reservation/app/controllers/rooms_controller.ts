@@ -6,12 +6,6 @@ import Cinema from '#models/cinema';
 export default class RoomsController {
     public async create({ request, response, params }: HttpContext)
     {
-        try {
-            Cinema.findOrFail(params.cinemaUid)
-        } catch (error) {
-            return response.status(404).json({message: "URL not found"});
-        }
-
         const room = new Room();
         room.uid = request.input('uid');
         room.cinemaUid = params.cinemaUid;
@@ -69,6 +63,6 @@ export default class RoomsController {
     {
         await Sceance.query().where('room_uid', params.uid).delete()
         await Room.query().where('uid', params.uid).delete();
-        return response.json({message:"Deleted successfully"});
+        return response.json({message:"Room deleted successfully"});
     }
 }

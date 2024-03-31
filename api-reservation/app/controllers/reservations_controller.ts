@@ -11,13 +11,13 @@ export default class ReservationsController {
 
             if (userUid === undefined || sceanceUid === undefined || seats === undefined) {
                 // Si un des éléments sont manquants, retournez une réponse d'erreur 422 avec un message approprié
-                response.status(422).json({ message: 'Le contenu de l\'objet réservation dans le body est invalide' });
+                response.status(422).json({ message: 'Invalid body in request' });
                 return; // Arrêtez l'exécution de la fonction
             }
 
             // Récupérer le nombre de réservations déjà effectuées pour cette séance
             const existingReservations = await Reservation.query()
-                .where('sceanceId', sceanceUid)
+                .where('sceance_uid', sceanceUid)
                 .count('* as total');
 
             // Extraire le nombre total de réservations
@@ -27,7 +27,7 @@ export default class ReservationsController {
             const rank = existingReservationsCount + 1;
 
             // Calculer la date d'expiration (1 semaine après la réservation)
-            const expiresAt = DateTime.local().plus({ days: 7 });
+            const expiresAt = DateTime.local().plus({ days: 1 });
 
             // Créer une nouvelle réservation avec .fill()
             const reservation = new Reservation();
@@ -44,10 +44,10 @@ export default class ReservationsController {
             await reservation.save();
 
             // Retourner une réponse de succès
-            response.status(201).json({ message: 'Réservation ajoutée avec succès', data: reservation });
+            response.status(201).json({ message: 'Reservation successfully registered', data: reservation });
         } catch (error) {
             // En cas d'erreur, retourner une réponse d'erreur
-            response.status(500).json({ message: 'erreur internew', error: error.message });
+            response.status(500).json({ message: 'Internal error', error: error.message });
         }
     }
 
@@ -58,7 +58,7 @@ export default class ReservationsController {
 
             if (userUid === undefined || sceanceUid === undefined || rank === undefined) {
                 // Si un des éléments sont manquants, retournez une réponse d'erreur 422 avec un message approprié
-                response.status(422).json({ message: 'Le contenu de l\'objet réservation dans le body est invalide' });
+                response.status(422).json({ message: 'Invalid body in request' });
                 return; // Arrêtez l'exécution de la fonction
             }
 
@@ -67,7 +67,7 @@ export default class ReservationsController {
                     .where('userUid', userUid)
                     .where('sceanceUid', sceanceUid)
                     .first();
-                
+
                 if(actualStatus !== undefined && actualStatus !== null) {
                     if (actualStatus.status === 'waiting') {
                         await Reservation.query()
@@ -81,16 +81,16 @@ export default class ReservationsController {
                             .where('rank', '>', 1)
                             .decrement('rank', 1);
 
-                        return response.status(201).json({ message: 'Réservation effectuée avec succès' });
+                        return response.status(201).json({ message: 'Reservation successfully registered' });
                     } else if(actualStatus.status === 'expired'){
-                        return response.status(410).json({ message: 'La réservation est expirée'});
+                        return response.status(410).json({ message: 'Reservation has expired'});
                     }
                 }
             }
 
         } catch (error) {
             // En cas d'erreur, retourner une réponse d'erreur
-            response.status(500).json({ message: 'erreur internew', error: error.message });
+            response.status(500).json({ message: 'Internal error', error: error.message });
         }
     }
 
@@ -101,7 +101,7 @@ export default class ReservationsController {
             if(reservation){
                 return reservation;
             } else {
-                return response.status(204).json({message: 'Reservations not found'});
+                return response.status(204).json({message: 'No reservations found'});
             }
         } catch (error) {
         	return response.status(500).json({error: error});

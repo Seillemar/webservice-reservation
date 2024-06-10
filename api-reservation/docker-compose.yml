@@ -4,14 +4,27 @@ services:
   adonis_app:
     container_name: api_reservation
     restart: always
-    build:
-      context: .
-      target: dependencies
+    build: ./docker/prod
     ports:
       - ${PORT}:${PORT}
       - 9229:9229
-    env_file:
-      - .env
+    # env_file:
+    #   - .env
+    # volumes:
+      # - ./:/home/node/app
+      # Uncomment the below line if you developing on MacOS
+      #- /home/node/app/node_modules
+    command: /bin/sh -c "/home/node/app/entrypoint.sh"
+
+  adonis_dev:
+    container_name: api_reservation_dev
+    restart: always
+    build: ./docker/dev
+    ports:
+      - ${PORT}:${PORT}
+      - 9229:9229
+    # env_file:
+    #   - .env
     # volumes:
       # - ./:/home/node/app
       # Uncomment the below line if you developing on MacOS
